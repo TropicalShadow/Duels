@@ -94,6 +94,12 @@ supported-plugins:
 
 
 request:
+  # If set to 'MIX', the plugin will allow both individual and party duels
+  # If set to 'PARTY', the plugin will only allow party duels
+  # If set to 'INDIVIDUAL', the plugin will only allow individual duels
+  game-mode: MIX
+
+
   # If set to 'true', players will need to have a cleared inventory in order to send or accept a duel request.
   # default: false
   requires-cleared-inventory: false
@@ -388,6 +394,9 @@ party:
   # default: true
   same-size-only: true
 
+  # If set to 'true', friendly fire will be enabled by default for parties.
+  # default: true
+  default-friendly-fire: true
 
 queue:
   # List of commands to block while in a queue.

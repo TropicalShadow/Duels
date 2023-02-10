@@ -14,6 +14,7 @@ import me.realized.duels.command.commands.party.subcommands.ToggleCommand;
 import me.realized.duels.command.commands.party.subcommands.TransferCommand;
 import me.realized.duels.data.UserData;
 import me.realized.duels.party.Party;
+import me.realized.duels.request.RequestGameMode;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -38,6 +39,11 @@ public class PartyCommand extends BaseCommand {
     @Override
     protected boolean executeFirst(final CommandSender sender, final String label, final String[] args) {
         final Player player = (Player) sender;
+
+        if(config.getRequestGameMode() == RequestGameMode.INDIVIDUAL){
+            lang.sendMessage(player, "ERROR.command.individual-mode");
+            return true;
+        }
 
         if (args.length == 0) {
             lang.sendMessage(sender, "COMMAND.party.usage", "command", label);

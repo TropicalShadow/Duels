@@ -3,6 +3,7 @@ package me.realized.duels.command.commands.duel.subcommands;
 import me.realized.duels.DuelsPlugin;
 import me.realized.duels.api.event.request.RequestDenyEvent;
 import me.realized.duels.command.BaseCommand;
+import me.realized.duels.request.RequestGameMode;
 import me.realized.duels.request.RequestImpl;
 import me.realized.duels.util.function.Pair;
 import me.realized.duels.util.validator.ValidatorUtil;
@@ -38,7 +39,7 @@ public class DenyCommand extends BaseCommand {
         final RequestDenyEvent event = new RequestDenyEvent(player, target, request);
         Bukkit.getPluginManager().callEvent(event);
 
-        if (request.isPartyDuel()) {
+        if (request.isPartyDuel() && config.getRequestGameMode() != RequestGameMode.INDIVIDUAL) {
             final Collection<Player> senderPartyMembers = request.getSenderParty().getOnlineMembers();
             final Collection<Player> targetPartyMembers = request.getTargetParty().getOnlineMembers();
             lang.sendMessage(senderPartyMembers, "COMMAND.duel.party-request.deny.receiver-party", "owner", player.getName(), "name", target.getName());

@@ -29,6 +29,7 @@ import me.realized.duels.player.PlayerInfo;
 import me.realized.duels.player.PlayerInfoManager;
 import me.realized.duels.queue.Queue;
 import me.realized.duels.queue.QueueManager;
+import me.realized.duels.scoreboard.ScoreboardManager;
 import me.realized.duels.setting.Settings;
 import me.realized.duels.teleport.Teleport;
 import me.realized.duels.util.Loadable;
@@ -38,11 +39,7 @@ import me.realized.duels.util.compat.CompatUtil;
 import me.realized.duels.util.compat.Titles;
 import me.realized.duels.util.inventory.InventoryUtil;
 import me.realized.duels.util.validator.ValidatorUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -60,6 +57,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 public class DuelManager implements Loadable {
 
@@ -299,6 +298,8 @@ public class DuelManager implements Loadable {
         addPlayers(first, match, arena, kit, arena.getPosition(1));
         addPlayers(second, match, arena, kit, arena.getPosition(2));
 
+        match.getScoreboardManager().registerScoreboards(first, second);
+
         if (config.isCdEnabled()) {
             arena.startCountdown();
         }
@@ -424,6 +425,7 @@ public class DuelManager implements Loadable {
             final Location deadLocation = player.getEyeLocation().clone();
 
             plugin.doSyncAfter(() -> {
+                match.getScoreboardManager().unregisterScoreboards(match.getPlayers());
                 if (arena.size() == 0) {
                     match.getAllPlayers().forEach(matchPlayer -> {
                         handleTie(matchPlayer, arena, match, false);

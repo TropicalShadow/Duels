@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import me.realized.duels.scoreboard.ScoreboardManager;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +27,9 @@ import me.realized.duels.queue.Queue;
 public class DuelMatch implements Match {
     
     protected final PartyManagerImpl partyManager;
+
+    @Getter
+    private final ScoreboardManager scoreboardManager;
 
     @Getter
     private final long creation;
@@ -54,6 +58,7 @@ public class DuelMatch implements Match {
         this.items = items;
         this.bet = bet;
         this.source = source;
+        this.scoreboardManager = new ScoreboardManager(plugin, this, partyManager);
     }
     
     public long getDurationInMillis() {

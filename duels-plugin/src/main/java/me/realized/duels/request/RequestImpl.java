@@ -59,6 +59,6 @@ public class RequestImpl implements Request {
     }
 
     public boolean isPartyDuel() {
-        return settings.isPartyDuel();
+        return settings.isPartyDuel() ;
     }
 }

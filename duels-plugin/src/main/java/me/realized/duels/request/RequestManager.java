@@ -61,14 +61,25 @@ public class RequestManager implements Loadable, Listener {
             return;
         }
 
+        final RequestGameMode gameMode = config.getRequestGameMode();
         final boolean isParty = request.isPartyDuel();
+
+        if(isParty && gameMode == RequestGameMode.INDIVIDUAL) {
+            lang.sendMessage(sender, "ERROR.request.mode-individual");
+            return;
+        }
+        if(!isParty && gameMode == RequestGameMode.PARTY) {
+            lang.sendMessage(sender, "ERROR.request.mode-party");
+            return;
+        }
+
         get(sender, true).put(isParty ? request.getTargetParty().getOwner().getUuid() : target.getUniqueId(), request);
         
         final String kit = settings.getKit() != null ? settings.getKit().getName() : lang.getMessage("GENERAL.not-selected");
         final String ownInventory = settings.isOwnInventory() ? lang.getMessage("GENERAL.enabled") : lang.getMessage("GENERAL.disabled");
         final String arena = settings.getArena() != null ? settings.getArena().getName() : lang.getMessage("GENERAL.random");
 
-        if (request.isPartyDuel()) {
+        if (isParty) {
             final Collection<Player> senderPartyMembers = request.getSenderParty().getOnlineMembers();
             final Collection<Player> targetPartyMembers = request.getTargetParty().getOnlineMembers();
             lang.sendMessage(senderPartyMembers, "COMMAND.duel.party-request.send.sender-party",

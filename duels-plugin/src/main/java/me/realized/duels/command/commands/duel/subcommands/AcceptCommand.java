@@ -3,6 +3,7 @@ package me.realized.duels.command.commands.duel.subcommands;
 import java.util.Collection;
 import java.util.Collections;
 
+import me.realized.duels.request.RequestGameMode;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -63,7 +64,7 @@ public class AcceptCommand extends BaseCommand {
         final String ownInventory = settings.isOwnInventory() ? lang.getMessage("GENERAL.enabled") : lang.getMessage("GENERAL.disabled");
         final String arena = settings.getArena() != null ? settings.getArena().getName() : lang.getMessage("GENERAL.random");
 
-        if (request.isPartyDuel()) {
+        if (request.isPartyDuel() && config.getRequestGameMode() != RequestGameMode.INDIVIDUAL) {
             final Collection<Player> senderPartyMembers = request.getSenderParty().getOnlineMembers();
             final Collection<Player> targetPartyMembers = request.getTargetParty().getOnlineMembers();
             lang.sendMessage(senderPartyMembers, "COMMAND.duel.party-request.accept.receiver-party",

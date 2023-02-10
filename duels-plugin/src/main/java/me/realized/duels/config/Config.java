@@ -11,6 +11,7 @@ import lombok.Getter;
 import me.realized.duels.DuelsPlugin;
 import me.realized.duels.config.converters.config.ConfigConverter10;
 import me.realized.duels.config.converters.config.ConfigConverter12;
+import me.realized.duels.request.RequestGameMode;
 import me.realized.duels.util.EnumUtil;
 import me.realized.duels.util.config.AbstractConfiguration;
 import me.realized.duels.util.config.convert.ConverterUtil;
@@ -68,6 +69,8 @@ public class Config extends AbstractConfiguration<DuelsPlugin> {
     private String lhLossesTitle;
 
     @Getter
+    private RequestGameMode requestGameMode;
+    @Getter
     private boolean requiresClearedInventory;
     @Getter
     private boolean preventCreativeMode;
@@ -124,6 +127,9 @@ public class Config extends AbstractConfiguration<DuelsPlugin> {
     private boolean preventTpToMatchPlayers;
     @Getter
     private boolean forceAllowCombat;
+
+    @Getter
+    private boolean partyDefaultFriendlyFire;
     @Getter
     private boolean cancelIfMoved;
     @Getter
@@ -307,6 +313,7 @@ public class Config extends AbstractConfiguration<DuelsPlugin> {
         lhLossesCmd = configuration.getString("supported-plugins.LeaderHeads.losses.menu.command", "openlosses");
         lhLossesTitle = configuration.getString("supported-plugins.LeaderHeads.losses.menu.title", "Duel Losses");
 
+        requestGameMode = RequestGameMode.fromString(configuration.getString("request.game-mode", "MIX"));
         requiresClearedInventory = configuration.getBoolean("request.requires-cleared-inventory", true);
         preventCreativeMode = configuration.getBoolean("request.prevent-creative-mode", false);
         ownInventoryEnabled = configuration.getBoolean("request.use-own-inventory.enabled", true);
@@ -356,6 +363,8 @@ public class Config extends AbstractConfiguration<DuelsPlugin> {
         partyAutoDisbandAfter = configuration.getInt("party.auto-disband-after", 10);
         partyMaxSize = configuration.getInt("party.max-size", 10);
         partySameSizeOnly = configuration.getBoolean("party.same-size-only", true);
+        partyDefaultFriendlyFire = configuration.getBoolean("party.default-friendly-fire", false);
+
 
         queueBlacklistedCommands = configuration.getStringList("queue.blacklisted-commands");
 

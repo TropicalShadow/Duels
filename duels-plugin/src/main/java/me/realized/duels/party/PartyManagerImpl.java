@@ -147,6 +147,7 @@ public class PartyManagerImpl implements Loadable, Listener {
         }
 
         party = new Party(player);
+        party.setFriendlyFire(config.isPartyDefaultFriendlyFire());
         parties.add(party);
         partyMap.put(player.getUniqueId(), party);
         return party;
